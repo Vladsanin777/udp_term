@@ -4,7 +4,7 @@
  * @brief Code file for work udp package
  */
 
-#include "udp_lib/udp.h"
+#include "udp.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -213,7 +213,8 @@ add_not_data_udp_pack:
     return ret;
 }
 
-ssize_t set_data_udp_pack(udp_pack_t pack, void * data, uint16_t size) {
+ssize_t set_data_udp_pack(udp_pack_t pack, const void * const data,
+        uint16_t size) {
     ssize_t ret = 0;
     void * ptr = NULL;
     size = MIN(size, MAX_SIZE_DATA);
@@ -383,7 +384,9 @@ ssize_t set_interface_udp_pack( \
         udp_pack_t pack, const char * const interface) {
     ssize_t ret = 0;
 
-    strncpy(pack->m_interface, interface, IFNAMSIZ);
+    memset(pack->m_interface, 0x00, IFNAMSIZ);
+
+    strncpy(pack->m_interface, interface, IFNAMSIZ - 1);
 
     return ret;
 }

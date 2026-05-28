@@ -4,8 +4,18 @@
  * @brief Header file for work udp package.
  */
 
+#ifndef __UDP__H__
+#define __UDP__H__
+
 #include <stdint.h>
 #include <stdlib.h>
+#include <stddef.h>
+
+#ifdef __cplusplus
+
+extern "C" {
+
+#endif
 
 /**
  * @defgroup UdpPack work for udp
@@ -185,8 +195,8 @@ ssize_t add_data_udp_pack(udp_pack_t pack, void * data, uint16_t size);
  * destroy_udp_pack(pack);
  * @endcode
  */
-ssize_t set_data_udp_pack(udp_pack_t pack, void * data,  \
-        const uint16_t size);
+ssize_t set_data_udp_pack(udp_pack_t pack, const void * const data,  \
+        uint16_t size);
 
 /**
  * @brief Function addition byte in UDP package.
@@ -701,3 +711,11 @@ ssize_t print_udp_pack(udp_pack_t pack);
 void destroy_udp_pack(udp_pack_t pack);
 
 /** @} */
+
+#ifdef __cplusplus
+
+}
+
+#endif
+
+#endif
