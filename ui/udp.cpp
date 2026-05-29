@@ -126,6 +126,9 @@ protected:
 
         m_mainLayout->addWidget(m_customTitleBar);
 
+        m_customTitleBar->setMouseTracking(true);
+        m_titleLabel->setMouseTracking(true);
+
         setObjectName("MainWindow");
         setStyleSheet(
                 "QWidget#MainWindow {"
@@ -150,8 +153,45 @@ protected:
         );
     }
 
+    bool eventFilter(QObject *watched, QEvent *event) override {
+        if (m_isResizing || m_resizeEdge > 0) {
+            return QWidget::eventFilter(watched, event);
+        }
+
+        if (watched == m_customTitleBar || watched == m_titleLabel) {
+            if (event->type() == QEvent::MouseButtonPress) {
+                QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+                
+                if (mouseEvent->button() == Qt::LeftButton) {
+                    if (windowHandle()) {
+                        windowHandle()->startSystemMove();
+                        mouseEvent->accept();
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return QWidget::eventFilter(watched, event);
+    }
+
     void mousePressEvent(QMouseEvent *event) override {
         if (event->button() == Qt::LeftButton) {
+            if (m_resizeEdge > 0) {
+                if (windowHandle()) {
+                    Qt::Edges systemEdge = Qt::Edges();
+                    
+                    if (m_resizeEdge & Left)   systemEdge |= Qt::LeftEdge;
+                    if (m_resizeEdge & Right)  systemEdge |= Qt::RightEdge;
+                    if (m_resizeEdge & Top)    systemEdge |= Qt::TopEdge;
+                    if (m_resizeEdge & Bottom) systemEdge |= Qt::BottomEdge;
+
+                    windowHandle()->startSystemResize(systemEdge);
+                    event->accept();
+                    return;
+                }
+            }
+            
             if (event->position().y() <= 40) {
                 if (windowHandle()) {
                     windowHandle()->startSystemMove();
@@ -159,67 +199,12 @@ protected:
                     return;
                 }
             }
-            if (m_resizeEdge > 0) {
-                m_isResizing = true;
-                m_dragPos = event->globalPosition().toPoint();
-                m_origGeometry = geometry();
-                event->accept();
-            }
-        } else {
-            QWidget::mousePressEvent(event);
         }
+        QWidget::mousePressEvent(event);
     }
 
     void mouseMoveEvent(QMouseEvent *event) override {
         QPoint pos = event->position().toPoint();
-        QPoint globalPos = event->globalPosition().toPoint();
-
-        if (m_isResizing) {
-            QRect currentGeom = this->geometry();
-            
-            int newX = currentGeom.x();
-            int newY = currentGeom.y();
-            int newW = currentGeom.width();
-            int newH = currentGeom.height();
-
-            QPoint mouseDelta = globalPos - m_dragPos;
-
-            if (m_resizeEdge & Left) {
-                int calculatedWidth = currentGeom.width() - mouseDelta.x();
-                if (calculatedWidth >= minimumWidth()) {
-                    newX = currentGeom.x() + mouseDelta.x();
-                    newW = calculatedWidth;
-                }
-            }
-            else if (m_resizeEdge & Right) {
-                int calculatedWidth = currentGeom.width() + mouseDelta.x();
-                if (calculatedWidth >= minimumWidth()) {
-                    newW = calculatedWidth;
-                }
-            }
-
-            if (m_resizeEdge & Top) {
-                int calculatedHeight = currentGeom.height() - mouseDelta.y();
-                if (calculatedHeight >= minimumHeight()) {
-                    newY = currentGeom.y() + mouseDelta.y();
-                    newH = calculatedHeight;
-                }
-            }
-            else if (m_resizeEdge & Bottom) {
-                int calculatedHeight = currentGeom.height() + mouseDelta.y();
-                if (calculatedHeight >= minimumHeight()) {
-                    newH = calculatedHeight;
-                }
-            }
-
-            setGeometry(newX, newY, newW, newH);
-
-            m_dragPos = globalPos;
-            m_origGeometry = geometry();
-
-            event->accept();
-            return;
-        }
 
         int edge = 0;
         if (pos.x() < m_borderWidth) edge |= Left;
@@ -242,17 +227,6 @@ protected:
         }
 
         QWidget::mouseMoveEvent(event);
-    }
-
-    void mouseReleaseEvent(QMouseEvent *event) override {
-        if (m_isResizing) {
-            m_isResizing = false;
-            m_resizeEdge = 0;
-            setCursor(Qt::ArrowCursor);
-            event->accept();
-        } else {
-            QWidget::mouseReleaseEvent(event);
-        }
     }
 
 private:

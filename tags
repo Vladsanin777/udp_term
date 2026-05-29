@@ -5343,6 +5343,7 @@ etag	docs/jquery.js	/^return null==n?null:Array.isArray(n)?S.map(n,function(e){r
 even	docs/jquery.js	/^){var e=y(this);setTimeout(function(){var t=e.data("ui-form-reset-instances");y.each(t,function(/;"	m	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be81f405
 even	docs/jquery.js	/^return e.parentNode&&e.parentNode.selectedIndex,!0===e.selected},empty:function(e){for(e=e.first/;"	p	property:ue.ce.fe.anonymousObjectd7436be84205.pseudos
 even	docs/jquery.js	/^var f="3.6.0",S=function(e,t){return new S.fn.init(e,t)};function p(e){var t=!!e&&"length"in e&&/;"	m	variable:anonymousObjectd7436be80705
+eventFilter	ui/udp.cpp	/^    bool eventFilter(QObject *watched, QEvent *event) override {$/;"	f	class:UDP_Window	typeref:typename:bool	file:
 eventPhase	docs/jquery.js	/^this.isImmediatePropagationStopped=we,e&&!this.isSimulated&&e.stopImmediatePropagation(),this.st/;"	p	variable:anonymousObjectd7436be8c005
 expand	docs/jquery.js	/^e.style[u]=t,t=S.css(e,u)),Ye(0,t,s)}}}),S.cssHooks.marginLeft=Fe(y.reliableMarginLeft,function(/;"	m	property:S.cssHooks
 expandNode	docs/navtree.js	/^  const expandNode = function(o, node, imm, setFocus) {$/;"	f	function:initNavTree
@@ -6247,7 +6248,6 @@ minWidth	docs/navtree.js	/^    $(sidenav).resizable({ minWidth: 0 });$/;"	p	vari
 mouseMoveEvent	ui/udp.cpp	/^    void mouseMoveEvent(QMouseEvent *event) override {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 mouseOnToPopup	docs/jquery.js	/^targetElements.on(evt+EVENT_NAMESPACE,function elementToggle(event){$.powerTip.toggle(this,event/;"	p	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be825405
 mousePressEvent	ui/udp.cpp	/^    void mousePressEvent(QMouseEvent *event) override {$/;"	f	class:UDP_Window	typeref:typename:void	file:
-mouseReleaseEvent	ui/udp.cpp	/^    void mouseReleaseEvent(QMouseEvent *event) override {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 mouseTrackingActive	docs/jquery.js	/^(function(root,factory){if(typeof define==="function"&&define.amd){define(["jquery"],factory)}el/;"	p	variable:anonymousFunctiond7436be817300.anonymousFunctiond7436be824f00.session
 mousedown	docs/jquery.js	/^","),this.handles={},e=0;e<i.length;e++)s="ui-resizable-"+(t=String.prototype.trim.call(i[e])),n/;"	p	variable:anonymousObjectd7436be821205
 mousedown	docs/jquery.js	/^$.SmartMenus,{hideAll:function(){$.each(menuTrees,function(){this.menuHideAll()})},destroy:funct/;"	p	variable:anonymousObjectd7436be827005
