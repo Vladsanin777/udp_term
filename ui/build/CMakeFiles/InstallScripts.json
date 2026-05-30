@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/vlad/udp/ui/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
