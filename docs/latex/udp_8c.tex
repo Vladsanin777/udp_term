@@ -1,192 +1,64 @@
-\doxysection{udp\+\_\+lib/\+udp.c File Reference}
-\hypertarget{udp_8c}{}\label{udp_8c}\index{udp\_lib/udp.c@{udp\_lib/udp.c}}
-
-
-Code file for work udp package.  
-
-
-{\ttfamily \+\#include "{}udp\+\_\+lib/\+udp.\+h"{}}\newline
-{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
-{\ttfamily \+\#include $<$string.\+h$>$}\newline
-{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
-{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
-{\ttfamily \+\#include $<$sys/\+ioctl.\+h$>$}\newline
-{\ttfamily \+\#include $<$sys/\+stat.\+h$>$}\newline
-{\ttfamily \+\#include $<$unistd.\+h$>$}\newline
-{\ttfamily \+\#include $<$fcntl.\+h$>$}\newline
-{\ttfamily \+\#include $<$errno.\+h$>$}\newline
+\doxysection{udp.\+c File Reference}
+\hypertarget{udp_8c}{}\label{udp_8c}\index{udp.c@{udp.c}}
+{\ttfamily \+\#include $<$udp.\+h$>$}\newline
+{\ttfamily \+\#include $<$getopt.\+h$>$}\newline
 {\ttfamily \+\#include $<$stddef.\+h$>$}\newline
-{\ttfamily \+\#include $<$net/\+if.\+h$>$}\newline
-{\ttfamily \+\#include $<$linux/\+if\+\_\+packet.\+h$>$}\newline
-{\ttfamily \+\#include $<$net/\+ethernet.\+h$>$}\newline
-{\ttfamily \+\#include $<$arpa/\+inet.\+h$>$}\newline
-{\ttfamily \+\#include $<$sys/\+socket.\+h$>$}\newline
-{\ttfamily \+\#include $<$netinet/\+ip.\+h$>$}\newline
-\doxysubsubsection*{Classes}
-\begin{DoxyCompactItemize}
-\item 
-struct \doxymbox{\hyperlink{structudp__head}{udp\+\_\+head}}
-\begin{DoxyCompactList}\small\item\em Struct is header UDP pack. \end{DoxyCompactList}\item 
-struct \doxymbox{\hyperlink{structudp__pack}{udp\+\_\+pack}}
-\begin{DoxyCompactList}\small\item\em Struct is UDP package. \end{DoxyCompactList}\item 
-struct \doxymbox{\hyperlink{structpseudo__header}{pseudo\+\_\+header}}
-\begin{DoxyCompactList}\small\item\em Struct \doxylink{structpseudo__header}{pseudo\+\_\+header} for calculate checksum for UDP package. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Macros}
-\begin{DoxyCompactItemize}
-\item 
-\+\#define \doxymbox{\hyperlink{group__UdpPack_ga0d38284fa20d6a5468680588f26778c8}{PACKED}}~\+\_\+\+\_\+attribute\+\_\+\+\_\+((packed))
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_aec1b28544d6f0672b991789c282e16fd}{HEAD\+\_\+\+ETH}}~sizeof(struct ethhdr)
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_aa46766dfe4357cb2ba08de4344ee9366}{HEAD\+\_\+\+UDP}}~sizeof(struct \doxymbox{\hyperlink{structudp__head}{udp\+\_\+head}})
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_a9667894cdd66fb6b19be4d60ac02483d}{HEAD\+\_\+\+IP}}~sizeof(struct iphdr)
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_a0a5a4d5e273fa9c6995127f98cfec6b6}{HEAD\+\_\+\+UDP\+\_\+\+IP}}~(\doxymbox{\hyperlink{udp_8c_a9667894cdd66fb6b19be4d60ac02483d}{HEAD\+\_\+\+IP}} + \doxymbox{\hyperlink{udp_8c_aa46766dfe4357cb2ba08de4344ee9366}{HEAD\+\_\+\+UDP}})
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_a5f7568f936b1afc62073b2fe491b0a7c}{MAX\+\_\+\+SIZE\+\_\+\+DATA}}~(0x\+FFFF -\/ \doxymbox{\hyperlink{udp_8c_a0a5a4d5e273fa9c6995127f98cfec6b6}{HEAD\+\_\+\+UDP\+\_\+\+IP}})
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_aee522b95f75b45cd12aeff278dcfe436}{NULL\+\_\+\+CHECKSUM}}~0x0000
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_a17ad6dbdbca3720a9127f050c6e109fb}{MIN}}(left,  rigth)
-\item 
-\+\#define \doxymbox{\hyperlink{udp_8c_a8c26df40665185c249ae3e05b539769a}{HEAD\+\_\+\+PSEUDO}}~sizeof(struct \doxymbox{\hyperlink{structpseudo__header}{pseudo\+\_\+header}})
-\end{DoxyCompactItemize}
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdbool.\+h$>$}\newline
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} \doxymbox{\hyperlink{group__UdpPack_gac073209d13c5a0e425b547924759b90f}{init\+\_\+udp\+\_\+pack}} (void)
-\begin{DoxyCompactList}\small\item\em Function for create object UDP package. \end{DoxyCompactList}\item 
-static uint16\+\_\+t \doxymbox{\hyperlink{group__UdpPack_gaa2953647f643ce72255133a39adabe1f}{inet\+\_\+port}} (const char \texorpdfstring{$\ast$}{*}const port)
-\begin{DoxyCompactList}\small\item\em Function support for parsing port. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_gaf1e2ebce0c63dad760436f66b5cca525}{set\+\_\+port\+\_\+source\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const port)
-\begin{DoxyCompactList}\small\item\em Function for setting source port in UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga34e91a82fe5ba0ff36b8b7a4162d2219}{set\+\_\+port\+\_\+destantion\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const port)
-\begin{DoxyCompactList}\small\item\em Function for setting destantion port in UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga4518c906c2ff7bcd466135f4457eb917}{set\+\_\+ip\+\_\+address\+\_\+source\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const ip)
-\begin{DoxyCompactList}\small\item\em Function for setting source ip address in UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga9c92f03fd8bcd80c0a8717d8511f96bc}{set\+\_\+ip\+\_\+address\+\_\+destantion\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const ip)
-\begin{DoxyCompactList}\small\item\em Function for setting destantion ip address in UDP package. \end{DoxyCompactList}\item 
-static void \doxymbox{\hyperlink{group__UdpPack_ga971cf1276d8804cc735075ee12142911}{set\+\_\+size\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const uint16\+\_\+t size)
-\begin{DoxyCompactList}\small\item\em Function raw write size UDP package. \end{DoxyCompactList}\item 
-uint16\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga82c7f136a32df0299f5e5563094fbc4a}{get\+\_\+size\+\_\+data\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function for getting size data. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga367dbfef9bf2e55dbb3443861f82e76d}{add\+\_\+data\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, void \texorpdfstring{$\ast$}{*}data, const uint16\+\_\+t size)
-\begin{DoxyCompactList}\small\item\em Function addition data in UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga6215aa14b1ee5e7d0e14a0939a27afa2}{set\+\_\+data\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, void \texorpdfstring{$\ast$}{*}data, uint16\+\_\+t size)
-\begin{DoxyCompactList}\small\item\em Function overriding data in UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga9f171c629d5f8a7ff24ccd920dd0bf69}{add\+\_\+byte\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, uint8\+\_\+t byte)
-\begin{DoxyCompactList}\small\item\em Function addition byte in UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_gaf49eea4ce97362fed222c0d35f4e80b6}{set\+\_\+input\+\_\+data\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function read data from stdin in UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga0e4c3a45b2cddd95cd6369ce1138eea1}{set\+\_\+file\+\_\+data\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const file\+\_\+name)
-\begin{DoxyCompactList}\small\item\em Function read data from file in UDP package. \end{DoxyCompactList}\item 
-static uint32\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga26e66504e0ce6f97f3345b70f4104729}{sum\+\_\+compute}} (void \texorpdfstring{$\ast$}{*}ptr, uint16\+\_\+t nbytes)
-\begin{DoxyCompactList}\small\item\em Function calculate sum in big endian. \end{DoxyCompactList}\item 
-static uint16\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga66ca52b0aa857eb5f90b5be48a251a73}{checksum\+\_\+compute}} (uint32\+\_\+t sum)
-\begin{DoxyCompactList}\small\item\em Function calculating from sum big endian to checksum big endian. \end{DoxyCompactList}\item 
-static void \doxymbox{\hyperlink{group__UdpPack_ga43bd25d43834b433711fdf4b1ee6fd8e}{calculate\+\_\+checksum\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function calculate checksum for ip header and UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga6c39bc361feefc6b011fb569fa8d3b00}{set\+\_\+interface\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const interface)
-\begin{DoxyCompactList}\small\item\em Function for pick interface to send UDP package. \end{DoxyCompactList}\item 
-static void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga717eca5df0b8bed19c0872838f62ef94}{get\+\_\+pack\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function raw get pointer on UDP package. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga4cb18d49955b5f28a3b5087c585ef31c}{send\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function to send UDP package. \end{DoxyCompactList}\item 
-static void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga64c2315887ccf4c3f30560302ff32bb6}{inet\+\_\+mac}} (const char \texorpdfstring{$\ast$}{*}const mac\+\_\+address)
-\begin{DoxyCompactList}\small\item\em Function return mac address in big endian. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_ga84f3d8d0bdf4a67eec9f41953d14bda3}{set\+\_\+mac\+\_\+address\+\_\+source\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const mac\+\_\+address)
-\begin{DoxyCompactList}\small\item\em Function setting mac address for source. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_gabd1e12a15ac9abc09d83ce930b38ae8a}{set\+\_\+mac\+\_\+address\+\_\+destantion\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack, const char \texorpdfstring{$\ast$}{*}const mac\+\_\+address)
-\begin{DoxyCompactList}\small\item\em Function setting mac address for destantion. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga51bca39eb65c7b8f6e34938d278bdedd}{get\+\_\+ip\+\_\+address\+\_\+source\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function for getting ip address source. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga45f59892166b06c807f354c942ccd5dc}{get\+\_\+ip\+\_\+address\+\_\+destantion\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function for getting ip address destantion. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_gad6b4c7e549d5e18d03a0b2390e91f9fe}{get\+\_\+interface\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function for getting interface. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga01073fc5ad591e38da01f4387c19e69a}{get\+\_\+mac\+\_\+address\+\_\+source\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function getting mac address for source. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_gaebc458fc40b923dfe0589e7f341acdf6}{get\+\_\+mac\+\_\+address\+\_\+destantion\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function setting mac address for destantion. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga85eee6188e607d0ee01af4ce1045e1f2}{get\+\_\+port\+\_\+destantion\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function for getting port destantion. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga629ad0b2e51e286471cb9fd9fbbb215f}{get\+\_\+port\+\_\+source\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function for getting port source. \end{DoxyCompactList}\item 
-ssize\+\_\+t \doxymbox{\hyperlink{group__UdpPack_gaefb857160af3891be362e938b6955c88}{print\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function print all info about udp pack. \end{DoxyCompactList}\item 
-char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__UdpPack_ga19e05e94bf630dbc97584b734ef176df}{get\+\_\+data\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function for getting data. \end{DoxyCompactList}\item 
-void \doxymbox{\hyperlink{group__UdpPack_gae2b2cb87ed580f5384fce15a6599f364}{destroy\+\_\+udp\+\_\+pack}} (\doxymbox{\hyperlink{group__UdpPack_ga6356b6b21b2a1a5c62a7d1085eb6f025}{udp\+\_\+pack\+\_\+t}} pack)
-\begin{DoxyCompactList}\small\item\em Function free UDP package. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-struct \doxymbox{\hyperlink{structudp__head}{udp\+\_\+head}} \doxymbox{\hyperlink{group__UdpPack_ga0d38284fa20d6a5468680588f26778c8}{PACKED}}
-\end{DoxyCompactItemize}
+int \doxymbox{\hyperlink{udp_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Entry point for the UDP packet crafting and transmission utility. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Detailed Description}
-Code file for work udp package. 
+\label{doc-func-members}
+\Hypertarget{udp_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{udp_8c_a3c04138a5bfe5d72780bb7e82a18e627}\index{udp.c@{udp.c}!main@{main}}
+\index{main@{main}!udp.c@{udp.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{udp_8c_a3c04138a5bfe5d72780bb7e82a18e627} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
 
-\begin{DoxyAuthor}{Author}
-Vladsanin777 
-\end{DoxyAuthor}
 
 
-\label{doc-define-members}
-\Hypertarget{udp_8c_doc-define-members}
-\doxysubsection{Macro Definition Documentation}
-\Hypertarget{udp_8c_aec1b28544d6f0672b991789c282e16fd}\index{udp.c@{udp.c}!HEAD\_ETH@{HEAD\_ETH}}
-\index{HEAD\_ETH@{HEAD\_ETH}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{HEAD\_ETH}{HEAD\_ETH}}
-{\footnotesize\ttfamily \label{udp_8c_aec1b28544d6f0672b991789c282e16fd} 
-\+\#define HEAD\+\_\+\+ETH~sizeof(struct ethhdr)}
+Entry point for the UDP packet crafting and transmission utility. 
 
-\Hypertarget{udp_8c_a9667894cdd66fb6b19be4d60ac02483d}\index{udp.c@{udp.c}!HEAD\_IP@{HEAD\_IP}}
-\index{HEAD\_IP@{HEAD\_IP}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{HEAD\_IP}{HEAD\_IP}}
-{\footnotesize\ttfamily \label{udp_8c_a9667894cdd66fb6b19be4d60ac02483d} 
-\+\#define HEAD\+\_\+\+IP~sizeof(struct iphdr)}
+This program parses command-\/line arguments to build a custom UDP packet. It allows configuration of MAC addresses, IP addresses, ports, and payload data.
 
-\Hypertarget{udp_8c_a8c26df40665185c249ae3e05b539769a}\index{udp.c@{udp.c}!HEAD\_PSEUDO@{HEAD\_PSEUDO}}
-\index{HEAD\_PSEUDO@{HEAD\_PSEUDO}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{HEAD\_PSEUDO}{HEAD\_PSEUDO}}
-{\footnotesize\ttfamily \label{udp_8c_a8c26df40665185c249ae3e05b539769a} 
-\+\#define HEAD\+\_\+\+PSEUDO~sizeof(struct \doxymbox{\hyperlink{structpseudo__header}{pseudo\+\_\+header}})}
+{\bfseries{Command-\/line Options:\+}}
+\begin{DoxyItemize}
+\item {\ttfamily -\/w}, {\ttfamily -\/-\/stdio} Read payload data from standard input.
+\item {\ttfamily -\/e}, {\ttfamily -\/-\/print} Print the packet structure to the console before sending.
+\item {\ttfamily -\/i}, {\ttfamily -\/-\/ip-\/address-\/destination} Set the destination IPv4 address.
+\item {\ttfamily -\/s}, {\ttfamily -\/-\/ip-\/address-\/source} Set the source IPv4 address.
+\item {\ttfamily -\/p}, {\ttfamily -\/-\/port-\/destanition} Set the destination UDP port.
+\item {\ttfamily -\/o}, {\ttfamily -\/-\/port-\/source} Set the source UDP port.
+\item {\ttfamily -\/n}, {\ttfamily -\/-\/interface} Specify the network interface (e.\+g., eth0).
+\item {\ttfamily -\/f}, {\ttfamily -\/-\/file} Read payload data from a specified file.
+\item {\ttfamily -\/m}, {\ttfamily -\/-\/mac-\/address-\/destantion} Set the destination MAC address.
+\item {\ttfamily -\/a}, {\ttfamily -\/-\/mac-\/address-\/source} Set the source MAC address.
+\end{DoxyItemize}
 
-\Hypertarget{udp_8c_aa46766dfe4357cb2ba08de4344ee9366}\index{udp.c@{udp.c}!HEAD\_UDP@{HEAD\_UDP}}
-\index{HEAD\_UDP@{HEAD\_UDP}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{HEAD\_UDP}{HEAD\_UDP}}
-{\footnotesize\ttfamily \label{udp_8c_aa46766dfe4357cb2ba08de4344ee9366} 
-\+\#define HEAD\+\_\+\+UDP~sizeof(struct \doxymbox{\hyperlink{structudp__head}{udp\+\_\+head}})}
+{\bfseries{Payload Logic:\+}}
+\begin{DoxyEnumerate}
+\item If {\ttfamily -\/w} or {\ttfamily -\/f} is provided, the data is pulled from those sources.
+\item If no source flag is provided, the program concatenates all remaining positional arguments (argv) into a single space-\/separated string payload.
+\end{DoxyEnumerate}
 
-\Hypertarget{udp_8c_a0a5a4d5e273fa9c6995127f98cfec6b6}\index{udp.c@{udp.c}!HEAD\_UDP\_IP@{HEAD\_UDP\_IP}}
-\index{HEAD\_UDP\_IP@{HEAD\_UDP\_IP}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{HEAD\_UDP\_IP}{HEAD\_UDP\_IP}}
-{\footnotesize\ttfamily \label{udp_8c_a0a5a4d5e273fa9c6995127f98cfec6b6} 
-\+\#define HEAD\+\_\+\+UDP\+\_\+\+IP~(\doxymbox{\hyperlink{udp_8c_a9667894cdd66fb6b19be4d60ac02483d}{HEAD\+\_\+\+IP}} + \doxymbox{\hyperlink{udp_8c_aa46766dfe4357cb2ba08de4344ee9366}{HEAD\+\_\+\+UDP}})}
 
-\Hypertarget{udp_8c_a5f7568f936b1afc62073b2fe491b0a7c}\index{udp.c@{udp.c}!MAX\_SIZE\_DATA@{MAX\_SIZE\_DATA}}
-\index{MAX\_SIZE\_DATA@{MAX\_SIZE\_DATA}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{MAX\_SIZE\_DATA}{MAX\_SIZE\_DATA}}
-{\footnotesize\ttfamily \label{udp_8c_a5f7568f936b1afc62073b2fe491b0a7c} 
-\+\#define MAX\+\_\+\+SIZE\+\_\+\+DATA~(0x\+FFFF -\/ \doxymbox{\hyperlink{udp_8c_a0a5a4d5e273fa9c6995127f98cfec6b6}{HEAD\+\_\+\+UDP\+\_\+\+IP}})}
+\begin{DoxyParams}{Parameters}
+{\em argc} & The number of command-\/line arguments. \\
+\hline
+{\em argv} & The array of command-\/line argument strings. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
 
-\Hypertarget{udp_8c_a17ad6dbdbca3720a9127f050c6e109fb}\index{udp.c@{udp.c}!MIN@{MIN}}
-\index{MIN@{MIN}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{MIN}{MIN}}
-{\footnotesize\ttfamily \label{udp_8c_a17ad6dbdbca3720a9127f050c6e109fb} 
-\+\#define MIN(\begin{DoxyParamCaption}\item[{}]{left}{, }\item[{}]{rigth}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{(((left)\ <\ ((typeof(left))rigth))\ ?\ (left)\ :\ ((typeof(left))rigth))}
-
-\end{DoxyCode}
-\Hypertarget{udp_8c_aee522b95f75b45cd12aeff278dcfe436}\index{udp.c@{udp.c}!NULL\_CHECKSUM@{NULL\_CHECKSUM}}
-\index{NULL\_CHECKSUM@{NULL\_CHECKSUM}!udp.c@{udp.c}}
-\doxysubsubsection{\texorpdfstring{NULL\_CHECKSUM}{NULL\_CHECKSUM}}
-{\footnotesize\ttfamily \label{udp_8c_aee522b95f75b45cd12aeff278dcfe436} 
-\+\#define NULL\+\_\+\+CHECKSUM~0x0000}
-
+\begin{DoxyItemize}
+\item {\ttfamily 0} on successful transmission.
+\item {\ttfamily -\/1} if memory allocation fails ({\ttfamily init\+\_\+udp\+\_\+pack}).
+\item Non-\/zero error code if packet configuration or sending fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}

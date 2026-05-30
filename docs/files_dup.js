@@ -1,5 +1,5 @@
 var files_dup =
 [
-    [ "udp_lib", "dir_c4ed44889d0fc34170a75974458b0cf6.html", "dir_c4ed44889d0fc34170a75974458b0cf6" ],
-    [ "main.c", "main_8c.html", "main_8c" ]
+    [ "build", "dir_4fef79e7177ba769987a8da36c892c5f.html", "dir_4fef79e7177ba769987a8da36c892c5f" ],
+    [ "udp.c", "udp_8c.html", "udp_8c" ]
 ];
