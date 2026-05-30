@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QRect>
 #include <QStyle>
+#include <QClipboard>
 #include <udp.h>
 #include <stddef.h>
 
@@ -26,6 +27,12 @@ private:
     QPushButton * m_minButton{new QPushButton{}};
     QPushButton * m_maxButton{new QPushButton{}};
     QPushButton * m_closeButton{new QPushButton{}};
+
+    QWidget * m_titleError{new QWidget{}};
+    QHBoxLayout * m_errorLayout{new QHBoxLayout{}};
+    QPushButton * m_closeError{new QPushButton{"⨉"}};
+    QPushButton * m_copyError{new QPushButton{"⧉"}};
+    QLabel * m_errorLabel{new QLabel{"Success"}};
 
     bool m_isDragging{false};
     QPoint * m_dragPosition{new QPoint{}};
@@ -62,13 +69,14 @@ public:
 
         setLayout(m_mainLayout);
 
+        resize(500, 500);
+
         m_mainLayout->setContentsMargins(0, 0, 0, 0);
         m_mainLayout->setSpacing(0);
 
         m_mainLayout->addLayout(m_form); 
 
         connect(m_fileCheckBox, &QCheckBox::toggled, this, &UDP_Window::onFileBoxToggle);
-        connect(m_send, &QPushButton::clicked, this, &UDP_Window::clickSend);
 
         m_form->insertRow(0, "Ip source: ", m_ipSource);
         m_form->insertRow(1, "Ip destantion: ", m_ipDestantion);
@@ -79,12 +87,24 @@ public:
         m_form->insertRow(6, "Interface: ", m_interface);
         m_form->insertRow(7, "File: ", m_fileCheckBox);
         m_fileCheckBox->setTristate(false);
-        selectData();
-        m_form->insertRow(9, m_send);
 
-        m_send->setFixedHeight(40);
+        selectFile();
 
         m_form->setContentsMargins(10, 10, 10, 10);
+        m_form->setVerticalSpacing(5);
+        m_form->setHorizontalSpacing(20);
+
+        m_data->setTabChangesFocus(true);
+
+        for (int i = 0; i < m_form->count(); ++i) {
+            QLayoutItem* item = m_form->itemAt(i);
+            if (QWidget* widget = item->widget()) {
+                widget->setFixedHeight(30); 
+                widget->setContentsMargins(0, 0, 0, 0);
+            }
+        }
+        deleteText();
+        selectData();
     }
 
 protected:
@@ -98,7 +118,13 @@ protected:
 
         m_customTitleBar->setFixedHeight(40);
 
-        m_titleLabel->setStyleSheet("color: white; font-weight: bold; margin-left: 10px;");
+        m_titleLabel->setStyleSheet("color: white; font-weight: bold;");
+
+        createTitleError();
+
+        m_send->setFixedSize(60, 30);
+        m_send->setStyleSheet("background-color: #000033");
+        connect(m_send, &QPushButton::clicked, this, &UDP_Window::clickSend);
 
         m_minButton->setFixedSize(30, 30);
         m_minButton->setStyleSheet("background-color: #660066;");
@@ -115,12 +141,16 @@ protected:
         m_closeButton->setIcon(style()->standardIcon(QStyle::SP_TitleBarCloseButton));
         connect(m_closeButton, &QPushButton::clicked, this, &QWidget::close);
 
+        m_titleLayout->addWidget(m_send);
+        m_titleLayout->addStretch();
         m_titleLayout->addWidget(m_titleLabel);
+        m_titleLayout->addWidget(m_titleError);
+        m_titleError->hide();
         m_titleLayout->addStretch();
         m_titleLayout->addWidget(m_minButton);
         m_titleLayout->addWidget(m_maxButton);
         m_titleLayout->addWidget(m_closeButton);
-        m_titleLayout->setContentsMargins(0, 0, 5, 0);
+        m_titleLayout->setContentsMargins(5, 5, 5, 5);
 
         m_customTitleBar->setLayout(m_titleLayout);
 
@@ -136,21 +166,47 @@ protected:
                 "   border: 1px solid #cccccc;"
                 "   border-radius: 6px;"
                 "}"
-                "QPushButton {"
+                "QTextEdit, QPushButton,"
+                "QLineEdit, QWidget#TitleBar {"
                 "   border: 1px solid #cccccc;"
                 "   background-color: #330066;"
                 "   color: white;"
                 "   border-radius: 6px;"
                 "}"
-        );
-        m_customTitleBar->setObjectName("TitleBar");
-        m_customTitleBar->setStyleSheet(
-                "QWidget#TitleBar {"
-                "   border: 1px solid #cccccc;"
-                "   border-radius: 6px;"
-                "   background-color: #330066;"
+                "QLabel {"
+                "   color: white;"
+                "}"
+                "QCheckBox::indicator {"
+                    "width: 18px;"
+                    "height: 18px;"
+                    "border: 2px solid #cccccc;"
+                    "border-radius: 4px;"
+                    "background-color: #330066;"
+                "}"
+                "QCheckBox::indicator:checked {"
+                    "background-color: #880033;"
                 "}"
         );
+        m_customTitleBar->setObjectName("TitleBar");
+        defaultTitle();
+    }
+
+    virtual void createTitleError(void) {
+        m_titleError->setLayout(m_errorLayout);
+        m_errorLayout->addWidget(m_closeError);
+        m_errorLayout->addWidget(m_errorLabel);
+        m_errorLayout->addWidget(m_copyError);
+
+        m_titleError->setContentsMargins(0, 0, 0, 0);
+        m_errorLayout->setContentsMargins(0, 0, 0, 0);
+
+        m_closeError->setFixedSize(30, 30);
+        m_closeError->setStyleSheet("background-color: #330066;");
+        m_copyError->setFixedSize(30, 30);
+        m_copyError->setStyleSheet("background-color: #500066;");
+
+        connect(m_closeError, &QPushButton::clicked, this, &UDP_Window::defaultTitle);
+        connect(m_copyError, &QPushButton::clicked, this, &UDP_Window::copyError);
     }
 
     bool eventFilter(QObject *watched, QEvent *event) override {
@@ -176,9 +232,10 @@ protected:
     }
 
     void mousePressEvent(QMouseEvent *event) override {
+        QWindow * win = windowHandle();
         if (event->button() == Qt::LeftButton) {
             if (m_resizeEdge > 0) {
-                if (windowHandle()) {
+                if (win) {
                     Qt::Edges systemEdge = Qt::Edges();
                     
                     if (m_resizeEdge & Left)   systemEdge |= Qt::LeftEdge;
@@ -186,23 +243,38 @@ protected:
                     if (m_resizeEdge & Top)    systemEdge |= Qt::TopEdge;
                     if (m_resizeEdge & Bottom) systemEdge |= Qt::BottomEdge;
 
-                    windowHandle()->startSystemResize(systemEdge);
+                    win->startSystemResize(systemEdge);
                     event->accept();
                     return;
                 }
             }
             
             if (event->position().y() <= 40) {
-                if (windowHandle()) {
-                    windowHandle()->startSystemMove();
+                if (win) {
+                    win->startSystemMove();
                     event->accept();
                     return;
                 }
             }
         }
+
         QWidget::mousePressEvent(event);
     }
 
+    void mouseDoubleClickEvent(QMouseEvent *event) {
+        if (event->position().y() <= 40) {
+            if (event->button() == Qt::LeftButton) {
+                if (window()->isMaximized()) {
+                    window()->showNormal();
+                } else {
+                    window()->showMaximized();
+                }
+                event->accept();
+            } else {
+                QWidget::mouseDoubleClickEvent(event);
+            }
+        }
+    }
     void mouseMoveEvent(QMouseEvent *event) override {
         QPoint pos = event->position().toPoint();
 
@@ -270,95 +342,111 @@ private:
         bool isFile = false;
         const char * data = NULL;
         const char * fileName = NULL;
+        const char * errorMessage = "Success";
         udp_pack_t pack = NULL;
 
         pack = init_udp_pack();
 
         if (pack == NULL) {
+            errorMessage = "Error: Get not Pack!";
             goto getNotPack;
         }
 
         ipSource = qPrintable(m_ipSource->text());
 
         if (ipSource == NULL) {
+            errorMessage = "Error: Get not IP source!";
             goto getNotIpSource;
         }
 
         ret = set_ip_address_source_udp_pack(pack, ipSource);
 
         if (ret != 0) {
+            errorMessage = "Error: Set not IP source!";
             goto setNotIpSource;
         }
 
         ipDestantion = qPrintable(m_ipDestantion->text());
 
         if (ipDestantion == NULL) {
+            errorMessage = "Error: Get not IP destantion!";
             goto getNotIpDestantion;
         }
 
         ret = set_ip_address_destantion_udp_pack(pack, ipDestantion);
 
         if (ret != 0) {
+            errorMessage = "Error: Set not IP destantion!";
             goto setNotIpDestantion;
         }
 
         portSource = qPrintable(m_portSource->text());
 
         if (portSource == NULL) {
+            errorMessage = "Error: Get not port source!";
             goto getNotPortSource;
         }
 
         ret = set_port_source_udp_pack(pack, portSource);
 
         if (ret != 0) {
+            errorMessage = "Error: Set not port source!";
             goto setNotPortSource;
         }
 
         portDestantion = qPrintable(m_portDestantion->text());
 
         if (portDestantion == NULL) {
+            errorMessage = "Error: Get not port destantion!";
             goto getNotPortDestantion;
         }
 
         ret = set_port_destantion_udp_pack(pack, portDestantion);
 
         if (ret != 0) {
+            errorMessage = "Error: Set not port destantion!";
             goto setNotPortDestantion;
         }
 
         macSource = qPrintable(m_macSource->text());
 
         if (macSource == NULL) {
+            errorMessage = "Error: Get not MAC source!";
             goto getNotMacSource;
         }
 
         ret = set_mac_address_source_udp_pack(pack, macSource);
 
         if (ret != 0) {
+            errorMessage = "Error: Set not MAC source!";
             goto setNotMacSource;
         }
 
         macDestantion = qPrintable(m_macDestantion->text());
 
         if (macDestantion == NULL) {
+            errorMessage = "Error: Get not MAC destantion!";
             goto getNotMacDestantion;
         }
 
         ret = set_mac_address_destantion_udp_pack(pack, macDestantion);
 
         if (ret != 0) {
+            errorMessage = "Error: Set not MAC destantion!";
             goto setNotMacDestantion;
         }
 
         interface = qPrintable(m_interface->text());
 
         if (interface == NULL) {
+            errorMessage = "Error: Get not interface!";
             goto getNotInterface;
         }
 
         ret = set_interface_udp_pack(pack, interface);
 
         if (ret != 0) {
+            errorMessage = "Error: Set not interface!";
             goto setNotInterface;
         }
 
@@ -369,12 +457,14 @@ private:
             fileName = qPrintable(m_fileName->text());
 
             if (fileName == NULL) {
+                errorMessage = "Error: Get not file name!";
                 goto getNotFileName;
             }
 
             ret = set_file_data_udp_pack(pack, fileName);
 
             if (ret != 0) {
+                errorMessage = "Error: Set not file name!";
                 goto setNotFileName;
             }
 
@@ -383,12 +473,14 @@ private:
             data = qPrintable(m_data->toPlainText());
 
             if (data == NULL) {
+                errorMessage = "Error: Get not data!";
                 goto getNotData;
             }
 
             ret = set_data_udp_pack(pack, data, strlen(data));
 
             if (ret != 0) {
+                errorMessage = "Error: Set not data!";
                 goto setNotData;
             }
 
@@ -397,10 +489,13 @@ private:
         ret = send_udp_pack(pack);
 
         if (ret != 0) {
+            errorMessage = "Error: Send not pack!";
             goto sendNotPack;
         }
 
         destroy_udp_pack(pack);
+
+        successTitle();
         
         return;
 
@@ -425,15 +520,39 @@ setNotIpSource:
 getNotIpSource:
         destroy_udp_pack(pack);
 getNotPack:
-        m_customTitleBar->setStyleSheet("background-color: red;");
+        errorTitle(errorMessage);
         return;
+    }
+
+    void defaultTitle(void) {
+        m_titleError->hide();
+        m_titleLabel->show();
+        m_customTitleBar->setStyleSheet("background-color: #330066;");
+    }
+
+    void errorTitle(const char * message) {
+        m_titleLabel->hide();
+        m_titleError->show();
+        m_errorLabel->setText(message);
+        m_customTitleBar->setStyleSheet("background-color: red;");
+    }
+
+    void successTitle(void) {
+        m_titleError->hide();
+        m_titleLabel->show();
+        m_customTitleBar->setStyleSheet("background-color: green;");
+    }
+
+    void copyError(void) {
+        QClipboard* clipboard = QApplication::clipboard();
+        const char * errorMessage = qPrintable(m_errorLabel->text());
+        clipboard->setText(errorMessage);
     }
 };
 
 int main(int argc, char ** argv) {
     QApplication app{argc, argv};
     UDP_Window window{};
-    window.resize(350, 350);
     window.show();
 
     return app.exec();

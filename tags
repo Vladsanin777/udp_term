@@ -5003,11 +5003,13 @@ converters	docs/jquery.js	/^isLocal:\/^(?:about|app|app-storage|.+-extension|fil
 converters	docs/jquery.js	/^return function(){o&&(o=a=r.onload=r.onerror=r.onabort=r.ontimeout=r.onreadystatechange=null,"ab/;"	p	variable:anonymousObjectd7436be816a05
 converters	docs/jquery.js	/^}return T},getJSON:function(e,t,n){return S.get(e,t,n,"json")},getScript:function(e,t){return S./;"	p	variable:anonymousObjectd7436be815605
 cookie_namespace	docs/cookie.js	/^  cookie_namespace: 'doxygen_',$/;"	p	variable:Cookie
+copyError	ui/udp.cpp	/^    void copyError(void) {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 countFlags	docs/jquery.js	/^viewportRight=viewportLeft+session.windowWidth,collisions=Collision.none;if(coords.top<viewportT/;"	f	function:TooltipController.showTip.closeDesyncedTip.trackScroll
 create	docs/jquery.js	/^e=y.data(this,h);return"instance"===i?(n=e,!1):e?"function"!=typeof e[i]||"_"===i.charAt(0)?y.er/;"	p	property:anonymousFunctiond7436be817300.anonymousObjectd7436be81ac05.options
 createIndent	docs/navtree.js	/^  const createIndent = function(o,domNode,node) {$/;"	f	function:initNavTree
 createPseudo	docs/jquery.js	/^"string"==typeof e.textContent)return e.textContent;for(e=e.firstChild;e;e=e.nextSibling)n+=o(e)/;"	p	variable:ue.ce.fe.anonymousObjectd7436be84205
 createResults	docs/search/search.js	/^function createResults(resultsPath) {$/;"	f
+createTitleError	ui/udp.cpp	/^    virtual void createTitleError(void) {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 createTween	docs/jquery.js	/^originalProperties:e,originalOptions:t,startTime:Ze||at(),duration:t.duration,tweens:[],createTw/;"	m	variable:anonymousObjectd7436be8f505
 css	docs/jquery.js	/^e,t,i),o="number"),null!=n&&n==n&&("number"!==o||u||(n+=i&&i[3]||(S.cssNumber[s]?"":"px")),y.cle/;"	m	variable:anonymousObjectd7436be8e205
 css	docs/jquery.js	/^e.style[u]=t,t=S.css(e,u)),Ye(0,t,s)}}}),S.cssHooks.marginLeft=Fe(y.reliableMarginLeft,function(/;"	m	variable:anonymousObjectd7436be8eb05
@@ -5040,6 +5042,7 @@ de	docs/jquery.js	/^)),n}catch(e){N(t,!0)}finally{s===S&&e.removeAttribute("id")
 decodeHtml	docs/search/search.js	/^  const decodeHtml = (html) => {$/;"	f	function:createResults
 default	Makefile	/^default: all$/;"	t
 defaultElement	docs/jquery.js	/^e=y.data(this,h);return"instance"===i?(n=e,!1):e?"function"!=typeof e[i]||"_"===i.charAt(0)?y.er/;"	p	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be81ac05
+defaultTitle	ui/udp.cpp	/^    void defaultTitle(void) {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 default_target	ui/build/Makefile	/^default_target: all$/;"	t
 define-members	docs/group__UdpPack.html	/^<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="de/;"	I
 define-members	docs/group__UdpPack.html	/^<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="de/;"	a
@@ -5338,6 +5341,7 @@ eq	docs/jquery.js	/^return e.parentNode&&e.parentNode.selectedIndex,!0===e.selec
 eq	docs/jquery.js	/^var f="3.6.0",S=function(e,t){return new S.fn.init(e,t)};function p(e){var t=!!e&&"length"in e&&/;"	m	variable:anonymousObjectd7436be80705
 eraseSetting	docs/cookie.js	/^  eraseSetting(cookie) {$/;"	m	variable:Cookie
 error	docs/jquery.js	/^push:u,sort:t.sort,splice:t.splice},S.extend=S.fn.extend=function(){var e,t,n,r,i,o,a=arguments[/;"	m	variable:anonymousObjectd7436be80f05
+errorTitle	ui/udp.cpp	/^    void errorTitle(const char * message) {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 escapeHtml	docs/navtree.js	/^    function escapeHtml (string) {$/;"	f	function:initNavTree.initPageToc
 etag	docs/jquery.js	/^return null==n?null:Array.isArray(n)?S.map(n,function(e){return{name:t.name,value:e.replace(Et,"/;"	p	variable:anonymousObjectd7436be814b05
 even	docs/jquery.js	/^){var e=y(this);setTimeout(function(){var t=e.data("ui-form-reset-instances");y.each(t,function(/;"	m	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be81f405
@@ -6119,11 +6123,15 @@ m	docs/jquery.js	/^!function(e,t){"use strict";"object"==typeof module&&"object"
 m_borderWidth	ui/udp.cpp	/^    const int m_borderWidth = 8;$/;"	m	class:UDP_Window	typeref:typename:const int	file:
 m_checksum	udp_lib/udp.c	/^    uint16_t m_checksum; \/**< Calculated software checksum *\/$/;"	m	struct:udp_head	typeref:typename:uint16_t	file:
 m_closeButton	ui/udp.cpp	/^    QPushButton * m_closeButton{new QPushButton{}};$/;"	m	class:UDP_Window	typeref:typename:QPushButton *	file:
+m_closeError	ui/udp.cpp	/^    QPushButton * m_closeError{new QPushButton{"⨉"}};$/;"	m	class:UDP_Window	typeref:typename:QPushButton *	file:
+m_copyError	ui/udp.cpp	/^    QPushButton * m_copyError{new QPushButton{"⧉"}};$/;"	m	class:UDP_Window	typeref:typename:QPushButton *	file:
 m_customTitleBar	ui/udp.cpp	/^    QWidget * m_customTitleBar{new QWidget{}};$/;"	m	class:UDP_Window	typeref:typename:QWidget *	file:
 m_data	udp_lib/udp.c	/^    uint8_t  m_data[MAX_SIZE_DATA]; \/**< Data in UDP package. *\/$/;"	m	struct:udp_pack	typeref:typename:uint8_t[]	file:
 m_data	ui/udp.cpp	/^    QTextEdit * m_data{new QTextEdit{}};$/;"	m	class:UDP_Window	typeref:typename:QTextEdit *	file:
 m_dragPos	ui/udp.cpp	/^    QPoint m_dragPos;$/;"	m	class:UDP_Window	typeref:typename:QPoint	file:
 m_dragPosition	ui/udp.cpp	/^    QPoint * m_dragPosition{new QPoint{}};$/;"	m	class:UDP_Window	typeref:typename:QPoint *	file:
+m_errorLabel	ui/udp.cpp	/^    QLabel * m_errorLabel{new QLabel{"Success"}};$/;"	m	class:UDP_Window	typeref:typename:QLabel *	file:
+m_errorLayout	ui/udp.cpp	/^    QHBoxLayout * m_errorLayout{new QHBoxLayout{}};$/;"	m	class:UDP_Window	typeref:typename:QHBoxLayout *	file:
 m_ethhdr	udp_lib/udp.c	/^    struct ethhdr m_ethhdr; \/**< Ethernet header start UDP package. *\/$/;"	m	struct:udp_pack	typeref:struct:ethhdr	file:
 m_fileCheckBox	ui/udp.cpp	/^    QCheckBox * m_fileCheckBox{new QCheckBox{}};$/;"	m	class:UDP_Window	typeref:typename:QCheckBox *	file:
 m_fileName	ui/udp.cpp	/^    QLineEdit * m_fileName{new QLineEdit{}};$/;"	m	class:UDP_Window	typeref:typename:QLineEdit *	file:
@@ -6149,6 +6157,7 @@ m_port_destantion	udp_lib/udp.c	/^    uint16_t m_port_destantion; \/**< Port des
 m_port_source	udp_lib/udp.c	/^    uint16_t m_port_source; \/**< Port source *\/$/;"	m	struct:udp_head	typeref:typename:uint16_t	file:
 m_resizeEdge	ui/udp.cpp	/^    int m_resizeEdge = 0;$/;"	m	class:UDP_Window	typeref:typename:int	file:
 m_send	ui/udp.cpp	/^    QPushButton * m_send{new QPushButton{"Send"}};$/;"	m	class:UDP_Window	typeref:typename:QPushButton *	file:
+m_titleError	ui/udp.cpp	/^    QWidget * m_titleError{new QWidget{}};$/;"	m	class:UDP_Window	typeref:typename:QWidget *	file:
 m_titleLabel	ui/udp.cpp	/^    QLabel * m_titleLabel{new QLabel{"UDP Transfer"}};$/;"	m	class:UDP_Window	typeref:typename:QLabel *	file:
 m_titleLayout	ui/udp.cpp	/^    QHBoxLayout * m_titleLayout{new QHBoxLayout{}};$/;"	m	class:UDP_Window	typeref:typename:QHBoxLayout *	file:
 main	main.c	/^int main(int argc, char ** argv) {$/;"	f	typeref:typename:int
@@ -6245,6 +6254,7 @@ minWidth	docs/jquery.js	/^)&&(this.menuScrollStop(t),this.menuScroll(t),e.preven
 minWidth	docs/jquery.js	/^handles:"e,s,se",helper:!1,maxHeight:null,maxWidth:null,minHeight:10,minWidth:10,zIndex:90,resiz/;"	p	property:anonymousFunctiond7436be817300.anonymousObjectd7436be820605.options
 minWidth	docs/jquery.js	/^this.prevPosition={top:this.position.top,left:this.position.left},this.prevSize={width:this.size/;"	p	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be820605._updateVirtualBoundaries.n
 minWidth	docs/navtree.js	/^    $(sidenav).resizable({ minWidth: 0 });$/;"	p	variable:anonymousObjectf5b2c05d3505
+mouseDoubleClickEvent	ui/udp.cpp	/^    void mouseDoubleClickEvent(QMouseEvent *event) {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 mouseMoveEvent	ui/udp.cpp	/^    void mouseMoveEvent(QMouseEvent *event) override {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 mouseOnToPopup	docs/jquery.js	/^targetElements.on(evt+EVENT_NAMESPACE,function elementToggle(event){$.powerTip.toggle(this,event/;"	p	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be825405
 mousePressEvent	ui/udp.cpp	/^    void mousePressEvent(QMouseEvent *event) override {$/;"	f	class:UDP_Window	typeref:typename:void	file:
@@ -7222,6 +7232,7 @@ subMenusSubOffsetX	docs/jquery.js	/^return this.each(function(){var dataOpts=$(t
 subMenusSubOffsetY	docs/jquery.js	/^return this.each(function(){var dataOpts=$(this).data("sm-options")||null;if(dataOpts)try{dataOp/;"	p	property:$.fn.smartmenus.defaults
 submit	docs/jquery.js	/^for(e in{submit:!0,reset:!0})b.pseudos[e]=he(e);function me(){}function xe(e){for(var t=0,n=e.le/;"	p	variable:ue.ce.fe.anonymousObjectd7436be84c05
 success	docs/jquery.js	/^}return T},getJSON:function(e,t,n){return S.get(e,t,n,"json")},getScript:function(e,t){return S./;"	p	variable:anonymousObjectd7436be815305
+successTitle	ui/udp.cpp	/^    void successTitle(void) {$/;"	f	class:UDP_Window	typeref:typename:void	file:
 sum_compute	udp_lib/udp.c	/^static uint32_t sum_compute(void *ptr, \\$/;"	f	typeref:typename:uint32_t	file:
 support	docs/jquery.js	/^e[r],r,e[r]))break;return e},makeArray:function(e,t){var n=t||[];return null!=e&&(p(Object(e))?S/;"	p	variable:anonymousObjectd7436be80f05
 sw	docs/jquery.js	/^"n","s","w"],nw:["nw","w","sw","n","s","se","nw"],ne:["ne","e","se","n","s","sw","ne"],sw:["sw",/;"	p	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be825505
