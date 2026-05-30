@@ -37,11 +37,11 @@ private:
     bool m_isDragging{false};
     QPoint * m_dragPosition{new QPoint{}};
 
-    bool m_isResizing = false;
-    int m_resizeEdge = 0;
+    bool m_isResizing{false};
+    Qt::Edges m_resizeEdge{};
     QPoint m_dragPos;
     QRect m_origGeometry;
-    const int m_borderWidth = 8;
+    const int m_borderWidth{8};
 
     QFormLayout * m_form{new QFormLayout{}};
     QLineEdit * m_ipSource{new QLineEdit{}};
@@ -55,13 +55,6 @@ private:
     QTextEdit * m_data{new QTextEdit{}};
     QLineEdit * m_fileName{new QLineEdit{}};
     QPushButton * m_send{new QPushButton{"Send"}};
-
-    enum ResizeDirection {
-        Left = 1,
-        Right = 2,
-        Top = 4,
-        Bottom = 8
-    };
 
 public:
     UDP_Window(QWidget * parent = nullptr) : QWidget{parent} {
@@ -210,7 +203,7 @@ protected:
     }
 
     bool eventFilter(QObject *watched, QEvent *event) override {
-        if (m_isResizing || m_resizeEdge > 0) {
+        if (m_isResizing || m_resizeEdge != 0) {
             return QWidget::eventFilter(watched, event);
         }
 
@@ -234,16 +227,9 @@ protected:
     void mousePressEvent(QMouseEvent *event) override {
         QWindow * win = windowHandle();
         if (event->button() == Qt::LeftButton) {
-            if (m_resizeEdge > 0) {
+            if (m_resizeEdge != 0) {
                 if (win) {
-                    Qt::Edges systemEdge = Qt::Edges();
-                    
-                    if (m_resizeEdge & Left)   systemEdge |= Qt::LeftEdge;
-                    if (m_resizeEdge & Right)  systemEdge |= Qt::RightEdge;
-                    if (m_resizeEdge & Top)    systemEdge |= Qt::TopEdge;
-                    if (m_resizeEdge & Bottom) systemEdge |= Qt::BottomEdge;
-
-                    win->startSystemResize(systemEdge);
+                    win->startSystemResize(m_resizeEdge);
                     event->accept();
                     return;
                 }
@@ -278,21 +264,33 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override {
         QPoint pos = event->position().toPoint();
 
-        int edge = 0;
-        if (pos.x() < m_borderWidth) edge |= Left;
-        if (pos.x() > width() - m_borderWidth) edge |= Right;
-        if (pos.y() < m_borderWidth) edge |= Top;
-        if (pos.y() > height() - m_borderWidth) edge |= Bottom;
+        m_resizeEdge = Qt::Edges{};
 
-        m_resizeEdge = edge;
+        if (pos.x() < m_borderWidth) {
+            m_resizeEdge |= Qt::LeftEdge;
+        }
 
-        if ((edge & Left && edge & Top) || (edge & Right && edge & Bottom)) {
+        if (pos.x() > width() - m_borderWidth) {
+            m_resizeEdge |= Qt::RightEdge;
+        }
+
+        if (pos.y() < m_borderWidth) {
+            m_resizeEdge |= Qt::TopEdge;
+        }
+
+        if (pos.y() > height() - m_borderWidth) {
+            m_resizeEdge |= Qt::BottomEdge;
+        }
+
+        if ((m_resizeEdge & Qt::LeftEdge && m_resizeEdge & Qt::TopEdge) \
+                || (m_resizeEdge & Qt::RightEdge && m_resizeEdge & Qt::BottomEdge)) {
             setCursor(Qt::SizeFDiagCursor);
-        } else if ((edge & Right && edge & Top) || (edge & Left && edge & Bottom)) {
+        } else if ((m_resizeEdge & Qt::RightEdge && m_resizeEdge & Qt::TopEdge) \
+                || (m_resizeEdge & Qt::LeftEdge && m_resizeEdge & Qt::BottomEdge)) {
             setCursor(Qt::SizeBDiagCursor);
-        } else if (edge & Left || edge & Right) {
+        } else if (m_resizeEdge & Qt::LeftEdge || m_resizeEdge & Qt::RightEdge) {
             setCursor(Qt::SizeHorCursor);
-        } else if (edge & Top || edge & Bottom) {
+        } else if (m_resizeEdge & Qt::TopEdge || m_resizeEdge & Qt::BottomEdge) {
             setCursor(Qt::SizeVerCursor);
         } else {
             setCursor(Qt::ArrowCursor);
