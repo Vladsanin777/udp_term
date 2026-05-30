@@ -89,8 +89,8 @@ clean: CMakeFiles/static_udp_autogen.dir/clean
 # Target rules for target CMakeFiles/shared_udp.dir
 
 # All Build rule for target.
-CMakeFiles/shared_udp.dir/all: CMakeFiles/shared_udp_autogen_timestamp_deps.dir/all
 CMakeFiles/shared_udp.dir/all: CMakeFiles/shared_udp_autogen.dir/all
+CMakeFiles/shared_udp.dir/all: CMakeFiles/shared_udp_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shared_udp.dir/build.make CMakeFiles/shared_udp.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shared_udp.dir/build.make CMakeFiles/shared_udp.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/vlad/udp/ui/build/CMakeFiles --progress-num=1,2,3,4 "Built target shared_udp"

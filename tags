@@ -2086,7 +2086,6 @@ BACKSPACE	docs/jquery.js	/^return this.filter(function(t){return t%2==0})},odd:f
 BIBTEX_CMD	docs/latex/Makefile	/^BIBTEX_CMD?=bibtex$/;"	m
 BUILD_DIR	ui/build/CMakeFiles/shared_udp_autogen.dir/AutogenInfo.json	/^	"BUILD_DIR" : "\/home\/vlad\/udp\/ui\/build\/shared_udp_autogen",$/;"	s
 BUILD_DIR	ui/build/CMakeFiles/static_udp_autogen.dir/AutogenInfo.json	/^	"BUILD_DIR" : "\/home\/vlad\/udp\/ui\/build\/static_udp_autogen",$/;"	s
-Bottom	ui/udp.cpp	/^        Bottom = 8$/;"	e	enum:UDP_Window::ResizeDirection	file:
 C	docs/jquery.js	/^t.preventDefault()}}).insertAfter(t));var A=".smartmenus_scroll";if(t.dataSM("scroll",{y:this.cs/;"	c	function:anonymousObjectd7436be826d05.docTouchEnd.anonymousFunctiond7436be82a400
 CC	udp_lib/Makefile	/^CC = gcc$/;"	m
 CFLAGS	udp_lib/Makefile	/^CFLAGS = -Wall -Wextra -O2 -fPIC$/;"	m
@@ -2376,7 +2375,6 @@ LEFT	docs/jquery.js	/^return this.filter(function(t){return t%2==0})},odd:functi
 LIBDIR	udp_lib/Makefile	/^LIBDIR ?= $(PREFIX)\/lib$/;"	m
 LISTOFALLMEMBERS	docs/navtreedata.js	/^var LISTOFALLMEMBERS = 'List of all members';/;"	v
 Le	docs/jquery.js	/^}}}),S.fn.extend({on:function(e,t,n,r){return Ee(this,e,t,n,r)},one:function(e,t,n,r){return Ee(/;"	c
-Left	ui/udp.cpp	/^        Left = 1,$/;"	e	enum:UDP_Window::ResizeDirection	file:
 Loading	docs/README_8md.html	/^<div class="SRStatus" id="Loading">Loading...<\/div>$/;"	I
 Loading	docs/annotated.html	/^<div class="SRStatus" id="Loading">Loading...<\/div>$/;"	I
 Loading	docs/classes.html	/^<div class="SRStatus" id="Loading">Loading...<\/div>$/;"	I
@@ -2625,8 +2623,6 @@ README_8md	docs/latex/README_8md.tex	/^\\hypertarget{README_8md}{}\\label{README
 RIGHT	docs/jquery.js	/^return this.filter(function(t){return t%2==0})},odd:function(){return this.filter(function(t){re/;"	p	variable:anonymousFunctiond7436be817300.anonymousObjectd7436be81f705
 RM	ui/build/Makefile	/^RM = \/usr\/bin\/cmake -E rm -f$/;"	m
 Re	docs/jquery.js	/^"string"==typeof e&&!ke.test(e)&&!ge[(de.exec(e)||["",""])[1].toLowerCase()]){e=S.htmlPrefilter(/;"	c	method:anonymousObjectd7436be8cb05.html
-ResizeDirection	ui/udp.cpp	/^    enum ResizeDirection {$/;"	g	class:UDP_Window	file:
-Right	ui/udp.cpp	/^        Right = 2,$/;"	e	enum:UDP_Window::ResizeDirection	file:
 S	docs/jquery.js	/^)?!0!==t&&"number"!=typeof t&&t.effect||h:o;"number"==typeof(t=t||{})?t={duration:t}:!0===t&&(t=/;"	c	method:anonymousFunctiond7436be817300.anonymousObjectd7436be81ac05.option
 S	docs/jquery.js	/^}return T},getJSON:function(e,t,n){return S.get(e,t,n,"json")},getScript:function(e,t){return S./;"	c	function:anonymousFunctiond7436be815100
 S.cssHooks	docs/jquery.js	/^e,t,i),o="number"),null!=n&&n==n&&("number"!==o||u||(n+=i&&i[3]||(S.cssNumber[s]?"":"px")),y.cle/;"	p
@@ -2759,7 +2755,6 @@ Te	docs/jquery.js	/^"script"),l&&ye(a),n){c=0;while(o=a[c++])he.test(o.type||"")
 Te	docs/jquery.js	/^for(e in{submit:!0,reset:!0})b.pseudos[e]=he(e);function me(){}function xe(e){for(var t=0,n=e.le/;"	c	function:ue.ce.fe
 Toggle	docs/search/search.js	/^  this.Toggle = function(id) {$/;"	m	class:SearchResults
 TooltipController	docs/jquery.js	/^placementKeys.shift())}}for(x=0;x<placements.length;x++){if(placementKeys[x]===placement){coords/;"	c
-Top	ui/udp.cpp	/^        Top = 4,$/;"	e	enum:UDP_Window::ResizeDirection	file:
 Topic Documentation	docs/latex/refman.tex	/^\\chapter{Topic Documentation}$/;"	c
 Topic Index	docs/latex/refman.tex	/^\\chapter{Topic Index}$/;"	c
 Typedef Documentation	docs/group__UdpPack.html	/^<a name="doc-typedef-members" id="doc-typedef-members"><\/a><h2 id="header-doc-typedef-members" /;"	i
@@ -6120,7 +6115,7 @@ locked	docs/jquery.js	/^){for(a=a||r.once,o=i=!0;u.length;l=-1){t=u.shift();whil
 lt	docs/jquery.js	/^S.fx=Ke.prototype.init,S.fx.step={};var Ze,et,tt,nt,rt=\/^(?:toggle|show|hide)$\/,it=\/queueHook/;"	f
 lt	docs/jquery.js	/^return e.parentNode&&e.parentNode.selectedIndex,!0===e.selected},empty:function(e){for(e=e.first/;"	p	property:ue.ce.fe.anonymousObjectd7436be84205.pseudos
 m	docs/jquery.js	/^!function(e,t){"use strict";"object"==typeof module&&"object"==typeof module.exports?module.expo/;"	f	function:anonymousFunctiond7436be80200
-m_borderWidth	ui/udp.cpp	/^    const int m_borderWidth = 8;$/;"	m	class:UDP_Window	typeref:typename:const int	file:
+m_borderWidth	ui/udp.cpp	/^    const int m_borderWidth{8};$/;"	m	class:UDP_Window	typeref:typename:const int	file:
 m_checksum	udp_lib/udp.c	/^    uint16_t m_checksum; \/**< Calculated software checksum *\/$/;"	m	struct:udp_head	typeref:typename:uint16_t	file:
 m_closeButton	ui/udp.cpp	/^    QPushButton * m_closeButton{new QPushButton{}};$/;"	m	class:UDP_Window	typeref:typename:QPushButton *	file:
 m_closeError	ui/udp.cpp	/^    QPushButton * m_closeError{new QPushButton{"⨉"}};$/;"	m	class:UDP_Window	typeref:typename:QPushButton *	file:
@@ -6143,7 +6138,7 @@ m_ipDestantion	ui/udp.cpp	/^    QLineEdit * m_ipDestantion{new QLineEdit{}};$/;"
 m_ipSource	ui/udp.cpp	/^    QLineEdit * m_ipSource{new QLineEdit{}};$/;"	m	class:UDP_Window	typeref:typename:QLineEdit *	file:
 m_iphdr	udp_lib/udp.c	/^    struct iphdr m_iphdr; \/**< IP header *\/$/;"	m	struct:udp_pack	typeref:struct:iphdr	file:
 m_isDragging	ui/udp.cpp	/^    bool m_isDragging{false};$/;"	m	class:UDP_Window	typeref:typename:bool	file:
-m_isResizing	ui/udp.cpp	/^    bool m_isResizing = false;$/;"	m	class:UDP_Window	typeref:typename:bool	file:
+m_isResizing	ui/udp.cpp	/^    bool m_isResizing{false};$/;"	m	class:UDP_Window	typeref:typename:bool	file:
 m_length	udp_lib/udp.c	/^    uint16_t m_length; \/**< Length udp pack *\/$/;"	m	struct:udp_head	typeref:typename:uint16_t	file:
 m_macDestantion	ui/udp.cpp	/^    QLineEdit * m_macDestantion{new QLineEdit{}};$/;"	m	class:UDP_Window	typeref:typename:QLineEdit *	file:
 m_macSource	ui/udp.cpp	/^    QLineEdit * m_macSource{new QLineEdit{}};$/;"	m	class:UDP_Window	typeref:typename:QLineEdit *	file:
@@ -6155,7 +6150,7 @@ m_portDestantion	ui/udp.cpp	/^    QLineEdit * m_portDestantion{new QLineEdit{}};
 m_portSource	ui/udp.cpp	/^    QLineEdit * m_portSource{new QLineEdit{}};$/;"	m	class:UDP_Window	typeref:typename:QLineEdit *	file:
 m_port_destantion	udp_lib/udp.c	/^    uint16_t m_port_destantion; \/**< Port destantion *\/$/;"	m	struct:udp_head	typeref:typename:uint16_t	file:
 m_port_source	udp_lib/udp.c	/^    uint16_t m_port_source; \/**< Port source *\/$/;"	m	struct:udp_head	typeref:typename:uint16_t	file:
-m_resizeEdge	ui/udp.cpp	/^    int m_resizeEdge = 0;$/;"	m	class:UDP_Window	typeref:typename:int	file:
+m_resizeEdge	ui/udp.cpp	/^    Qt::Edges m_resizeEdge{};$/;"	m	class:UDP_Window	typeref:typename:Qt::Edges	file:
 m_send	ui/udp.cpp	/^    QPushButton * m_send{new QPushButton{"Send"}};$/;"	m	class:UDP_Window	typeref:typename:QPushButton *	file:
 m_titleError	ui/udp.cpp	/^    QWidget * m_titleError{new QWidget{}};$/;"	m	class:UDP_Window	typeref:typename:QWidget *	file:
 m_titleLabel	ui/udp.cpp	/^    QLabel * m_titleLabel{new QLabel{"UDP Transfer"}};$/;"	m	class:UDP_Window	typeref:typename:QLabel *	file:

@@ -536,8 +536,9 @@ getNotPack:
     }
 
     void successTitle(void) {
-        m_titleError->hide();
-        m_titleLabel->show();
+        m_titleLabel->hide();
+        m_titleError->show();
+        m_errorLabel->setText("Success: send!");
         m_customTitleBar->setStyleSheet("background-color: green;");
     }
 
